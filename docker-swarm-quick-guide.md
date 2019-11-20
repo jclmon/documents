@@ -1,13 +1,16 @@
 # Desarrollo rápido con docker-compose y docker Swarm
 
-## Importar máquina en windows 10
+## importar máquina en windows 10
 ```
 docker-machine create --driver hyperv --hyperv-virtual-switch "VM-External-Switch" --hyperv-boot2docker-url file://C:/tmp/boot2docker.iso swarm1
 docker-machine env swarm1
 docker-machine ssh swarm1
+docker-machine create --driver hyperv --hyperv-virtual-switch "VM-External-Switch" --hyperv-boot2docker-url file://C:/tmp/boot2docker.iso swarm2
+docker-machine env swarm2
+docker-machine ssh swarm2
 ```
 
-## Crear el manager
+## crear el manager
 ```
 root@swarm1:/home/docker# docker swarm init
 ```
@@ -128,4 +131,33 @@ docker stack deploy --compose-file=portainer-agent-stack.yml portainer
 ```
 git clone https://github.com/swarmpit/swarmpit
 docker stack deploy -c swarmpit/docker-compose.yml swarmpit
+```
+# Incluir stacks desde la aplicación p.e. portainer
+```
+version: '3.1'
+services:
+
+ wordpress:
+  image: wordpress
+  restart: always
+  ports:
+   - 8080:80
+  environment:
+   WORDPRESS_DB_HOST: db
+   WORDPRESS_DB_USER: exampleuser
+   WORDPRESS_DB_PASSWORD: examplepass
+   WORDPRESS_DB_NAME: expampledb
+
+ db:
+  image: mysql:5.7
+  restart: always
+  environment:
+    MYSQL_DATABASE: exampledb
+    MYSQL_USER: exampleuser
+    MYSQL_PASSWORD: examplepass
+    MYSQL_RANDOM_ROOT_PASSWORD: '1'
+```
+También se puede ejecutar el stack desde línea de comandos:
+```
+docker stack deploy -c docker-compose-wp.yml wordpress
 ```
