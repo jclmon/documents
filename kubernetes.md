@@ -8,7 +8,11 @@ también:
 ```
 DISM /Online /Enable-Feature /All /FeatureName:Microsoft-Hyper-V
 ```
-
+## Asignar el environment de docker a minikube
+```
+> minikube docker-env
+> minikube docker-env | Invoke-Expression
+```
 ## Arrancar minikube
 
 Debe estar creado con el Administrador de Hyper-V el conmutador virtual VM-External-Switch como external a la red del equipo (eth0 o wlan)
@@ -132,9 +136,9 @@ kubectl logs doscont -c cont1
 kubectl exec -ti doscont -- sh
 ```
 
-# LABELS
+## Labels
 
-## Labels metadata en manifiestos
+### Labels metadata en manifiestos
 ```
 kubectl get pods -l app=backend
 kubectl get pods -l app=frontend
@@ -359,7 +363,7 @@ REVISION  CHANGE-CAUSE
 ```
 
 
-# Services
+# SERVICES
 
 ```
 > kubectl get svc
@@ -399,6 +403,11 @@ NAME                               READY   STATUS    RESTARTS   AGE   IP        
 deployment-test-86677fd487-8ms9j   1/1     Running   0          11m   172.18.0.8   minikube   <none>           <none> 
 deployment-test-86677fd487-9zbxt   1/1     Running   0          11m   172.18.0.4   minikube   <none>           <none> 
 deployment-test-86677fd487-bwxgx   1/1     Running   0          11m   172.18.0.7   minikube   <none>           <none>
+```
+
+### Buscar propiedades del deployment
+```
+> kubectl get deployments backend-k8s-hands-on -o yaml | grep -i PullPolicy
 ```
 
 ### Imagen temporal cuando se sale del ssh se elimina, validación de otros pods
