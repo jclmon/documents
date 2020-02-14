@@ -23,7 +23,7 @@ minikube start --vm-driver "hyperv" --hyperv-virtual-switch "VM-External-Switch"
 
 # KUBERNETES
 
-# Pods
+# PODS
 
 ### Crear un pod
 ```
@@ -364,6 +364,8 @@ REVISION  CHANGE-CAUSE
 
 
 # SERVICES
+
+Los tipos de servicio son: ClusterIP, NodePort y LoadBalancer
 
 ```
 > kubectl get svc
